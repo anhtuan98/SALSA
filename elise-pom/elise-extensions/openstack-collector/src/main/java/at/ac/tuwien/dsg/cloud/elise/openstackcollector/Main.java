@@ -104,7 +104,7 @@ public class Main extends UnitInstanceCollector {
             }
         }
         UnitInstance instance = new UnitInstance(server.getName(), ServiceCategory.VirtualMachine);
-        instance.setDomainInfo(vmInfo.toJson());
+        instance.setDomain(vmInfo);
         return instance;
     }
 
@@ -133,9 +133,8 @@ public class Main extends UnitInstanceCollector {
     }
 
     @Override
-    public LocalIdentification identify(UnitInstance paramUnitInstance) {
-        String domainInfo = paramUnitInstance.getDomainInfo();
-        VirtualMachineInfo vmInfo = (VirtualMachineInfo) VirtualMachineInfo.fromJson(domainInfo);
+    public LocalIdentification identify(UnitInstance paramUnitInstance) {        
+        VirtualMachineInfo vmInfo = (VirtualMachineInfo)paramUnitInstance.getDomain();
         LocalIdentification local = new LocalIdentification(ServiceCategory.VirtualMachine, this.getName());
         local.hasIdentification("ip", vmInfo.getPrivateIp());
         return local;

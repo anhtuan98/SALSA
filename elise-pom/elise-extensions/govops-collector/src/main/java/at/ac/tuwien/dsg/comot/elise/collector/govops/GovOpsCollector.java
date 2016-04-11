@@ -55,9 +55,9 @@ public class GovOpsCollector extends UnitInstanceCollector {
         if (allInstances != null && !allInstances.isEmpty()) {
             for (UnitInstance ins : allInstances) {
                 System.out.println("Checking instance:" + ins.toJson());
-                DomainEntity entity = DomainEntity.fromJson(ins.getDomainInfo());
+                DomainEntity entity = ins.getDomain();
                 if (entity.getDomainID().equals(domainID)) {
-                    System.out.println("Found instance: " + ins.getId());
+                    System.out.println("Found instance: " + ins.getUuid());
                     return ins;
                 }
             }
@@ -96,9 +96,9 @@ public class GovOpsCollector extends UnitInstanceCollector {
             if (d.getMeta().get("location") != null) {
                 gatewayInfo.setLocation(d.getMeta().get("location"));
             }
-            u.hasExtra("GovOptID", d.getId());
+            u.getEnv().put("GovOptID", d.getId());
             for (Map.Entry<String, String> entry : d.getMeta().entrySet()) {
-                u.hasExtra(entry.getKey(), entry.getValue());
+                u.getEnv().put(entry.getKey(), entry.getValue());
             }
 
             String idParam = d.getId().replace(".", "_");
@@ -128,7 +128,7 @@ public class GovOpsCollector extends UnitInstanceCollector {
                     ex.printStackTrace();
                 }
             }
-            u.setDomainInfo(gatewayInfo.toJson());
+            u.setDomain(gatewayInfo);
             units.add(u);
         }
         return units;
@@ -136,7 +136,7 @@ public class GovOpsCollector extends UnitInstanceCollector {
 
     @Override
     public LocalIdentification identify(UnitInstance instance) {
-        DomainEntity entity = DomainEntity.fromJson(instance.getDomainInfo());
+        DomainEntity entity =instance.getDomain();
         String unitID = entity.getDomainID();
         System.out.println("Get govops ID: " + unitID);
 //        String unitID = instance.findFeatureByName("govops-device").getMetricValueByName("id").getValue().toString();

@@ -33,7 +33,7 @@ public class Main extends UnitInstanceCollector {
         vmInfo.setJavaVersion(System.getProperty("java.version"));
         
         
-        instance.setDomainInfo(null);
+        instance.setDomain(null);
         instances.add(instance);
         return instances;
     }

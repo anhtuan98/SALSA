@@ -74,7 +74,7 @@ public class rSYBLCollector extends UnitInstanceCollector {
                                 System.out.println(" ---- >> The unit service has a Directive");
                                 UnitInstance instance = new UnitInstance(cloudServiceXML.getId() + "/" + topo.getId() + "/" + unit.getId() + "/instances", ServiceCategory.ElasticPlatformService);
                                 instance.hasCapability(new Capability("control", Capability.ExecutionMethod.REST, new RestExecution(endpoint + "/" + cloudServiceXML.getId() + "/startControlOnExisting", RestExecution.RestMethod.PUT, "")).executedBy("rSYBL"));
-                                instance.hasExtra("rSYBL_UNIT_ID", cloudServiceXML.getId() + "/" + unit.getId());
+                                instance.getEnv().put("rSYBL_UNIT_ID", cloudServiceXML.getId() + "/" + unit.getId());
                                 unitInstances.add(instance);
                             }
                         }
@@ -120,8 +120,8 @@ public class rSYBLCollector extends UnitInstanceCollector {
 
     @Override
     public LocalIdentification identify(UnitInstance paramUnitInstance) {
-        String unitID = paramUnitInstance.getExtra().get("rSYBL_UNIT_ID");
-        return new LocalIdentification(ServiceCategory.ElasticPlatformService, "rSYBL").hasIdentification(IDType.SALSA_UNIT.toString(), paramUnitInstance.getExtra().get("rSYBL-Unit-ID"));
+        String unitID = paramUnitInstance.getEnv().get("rSYBL_UNIT_ID");
+        return new LocalIdentification(ServiceCategory.ElasticPlatformService, "rSYBL").hasIdentification(IDType.SALSA_UNIT.toString(), paramUnitInstance.getEnv().get("rSYBL-Unit-ID"));
     }
 
     @Override

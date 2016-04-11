@@ -57,7 +57,7 @@ public class MelaCollector extends UnitInstanceCollector {
                     UnitInstance newInstance = new UnitInstance("instanceOf_" + elasticService.getId(), ServiceCategory.ElasticPlatformService);
                     String monitorEndpoint = this.endpoint + "/" + elasticService.getId() + "/monitoringdata/json";
                     newInstance.hasCapability(new Capability("monitor", Capability.ExecutionMethod.REST, new RestExecution(monitorEndpoint, RestExecution.RestMethod.GET, null)).executedBy("MELA"));                    
-                    newInstance.hasExtra("MELA_SERVICE_ID", elasticService.getId());
+                    newInstance.getEnv().put("MELA_SERVICE_ID", elasticService.getId());
                     unitInstances.add(newInstance);
                 }
             } catch (IOException ex) {
@@ -76,7 +76,7 @@ public class MelaCollector extends UnitInstanceCollector {
 
     @Override
     public LocalIdentification identify(UnitInstance paramUnitInstance) {
-        String serviceID = paramUnitInstance.getExtra().get("MELA_SERVICE_ID");
+        String serviceID = paramUnitInstance.getEnv().get("MELA_SERVICE_ID");
         return new LocalIdentification(ServiceCategory.ElasticPlatformService, "MELA").hasIdentification(IDType.SALSA_SERVICE.toString(), serviceID);
     }
 

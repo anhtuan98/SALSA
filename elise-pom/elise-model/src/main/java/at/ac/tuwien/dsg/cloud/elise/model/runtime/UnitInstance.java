@@ -23,7 +23,9 @@ import at.ac.tuwien.dsg.cloud.salsa.domainmodels.types.ServiceCategory;
 import at.ac.tuwien.dsg.cloud.elise.model.generic.Metric;
 import at.ac.tuwien.dsg.cloud.salsa.domainmodels.ExtensibleModel;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -45,6 +47,9 @@ public class UnitInstance extends ServiceUnit {
     protected UnitInstance hostedOn;
 
     protected Set<UnitInstance> connectTo = new HashSet<>();
+    
+    // to store custom information related to the runtime
+    protected Map<String, String> env = new HashMap<>();
 
 //    @RelatedToVia(type = "HostOn", direction = Direction.OUTGOING)
 //    HostOnRelationshipInstance hostOnRela;
@@ -155,5 +160,15 @@ public class UnitInstance extends ServiceUnit {
     public void setConnectTo(Set<UnitInstance> connectTo) {
         this.connectTo = connectTo;
     }
+
+    public Map<String, String> getEnv() {
+        return env;
+    }
+
+    public void setEnv(Map<String, String> env) {
+        this.env = env;
+    }
+    
+    
 
 }
