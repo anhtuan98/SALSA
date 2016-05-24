@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ELISE by tuwiendsg</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <style>
+		p.justify{
+				text-align: justify;
+		}
+		p.margined{
+				text-align: justify;
+				margin-left: 35px;
+		}
+
+
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
+.tg td{line-height: 100%;font-family:Arial, sans-serif;font-size:12px;padding:5px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:break-word;border-color:#ccc;color:#333;background-color:#fff;}
+.tg th{line-height: 100%;font-family:Arial, sans-serif;font-size:12px;font-weight:normal;padding:5px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-hgcj{font-weight:bold;text-align:center}
+.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+p.small {
+    line-height: 70%;
+}
+
+		</style>
+		
+		
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="scripts/jquery-1.3.2.debug.js" type="text/javascript"></script>
+        <script src="scripts/json.debug.js" type="text/javascript"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+  </head>
+  <body>
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-27052073-2', 'auto');
+    ga('send', 'pageview');
+  </script>
+ 
+    
+    <div class="wrapper">
+      <header>
+        <h1 class="header">ELISE</h1> 
+        <p class="header">Managing On-demand Sensing Resources in  IoT Cloud Systems</p>
+        <h2 class="header">Sources</h2>
+        
+        <ul>
+          <li class="download"><a class="buttons" href="http://tuwiendsg.github.io/SALSA/download.html">Download</a></li>
+<!--          <li class="download"><a class="buttons" href="https://github.com/tuwiendsg/SALSA/tarball/master">Download TAR</a></li>  -->
+          <li><a class="buttons github" href="https://github.com/tuwiendsg/SALSA/tree/master/elise-pom">View On GitHub</a></li>
+          <li><a class="buttons javadoc" href="http://tuwiendsg.github.io/SALSA/apidocs/">Javadoc & UML</a></li>
+        </ul>
+        
+        <p class="header">Maintained by <a class="header name" href="https://github.com/tuwiendsg">tuwiendsg</a></p>
+
+      </header>
+      <section>
+      
+      
+<h1><a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Introduction</h1>
+<p>This page provides extra materials for the paper <b>"Managing On-demand Sensing Resources in  IoT Cloud Systems"</b>. </p>
+
+<p>At the moment, ELISE is integrated in SALSA, towards providing information of IoT Cloud Systems for the configuration processes. By the integration, ELISE reuses some of concepts and designs in SALSA, as well as automatically captures deployment information from SALSA by default, such as the cloud service structure and cloud infrastructure information.</p>
+
+<h1><a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>ELISE API</h1>
+
+ELISE provides three types of APIs:
+<ol>
+  <li><strong><a href="http://tuwiendsg.github.io/SALSA/apidocs/at/ac/tuwien/dsg/cloud/elise/master/RESTService/EliseRepository.html">Repository API</a></strong>: Enables to manage IoT cloud components regarding the ELISE information model. First, the API covers generic components such as cloud provider, service template, service instance, artifact, capabilities, etc. Second, the API enables extensible models such as domain model of IoT and cloud, quality, contract, licensing.</li>
+  <li><strong><a href="http://tuwiendsg.github.io/SALSA/apidocs/at/ac/tuwien/dsg/cloud/elise/master/RESTService/EliseManager.html">Management API</a></strong>: Enables to orchestrate ELISE collectors to interface with different providers. </li>
+  <li><strong> <a href="http://tuwiendsg.github.io/SALSA/apidocs/at/ac/tuwien/dsg/cloud/elise/master/RESTService/EliseCommunicationService.html">Communication API</a></strong>: Enables to split and send queries to multiple the collectors, which then update information to the repository. </li>
+</ol>
+
+
+<h1><a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Managing ELISE components</h1>
+<h3>Populate the collectors and adaptors</h3>
+<p>
+A collector is the combination of a hosted component name conductor and a set of adaptors. The conductors and adaptors are .jar artifact, where conductor.jar is executable. The figure below shows how to inject adaptors to a conductor. When receiving a query, the conductor will scan all the <i>extensions</i> folder for the adaptors and execute appropriate functions. The custom settings for the adaptors can be put in the adaptor.conf.
+</p>
+
+<p>The conductor can be execute via normal java: "java -jar conductor.jar"</p>
+<img src="images/ss-populate-output.png" alt="Populate the collectors" width="70%" height="70%">
+<p>
+Above folder structure can be created manually or using salsa-client. Salsa-client will inform salsa-pioneer to deploy the conductor as a normal software component on the infrastructure.
+</p>
+
+
+<h3>Using the salsa-client</h3>
+<p>Sys-admin can use Salsa-client to manage the system. Available commands is shown via --help option:</p>
+<code><pre>
+./salsa-client --help
+Usage: java -jar salsa-client.jar
+SALSA Java command-line client
+
+ -a (--address) &ltaddress&gt : The address of the salsa engine (default:
+                            128.130.172.216)
+ -h (--help)              : Print the help and exit (default: true)
+ -p (--port) &ltport&gt       : The port of the salsa engine (default: 8080)
+
+Type 'java -jar salsa-client.jar help &ltcommand&gt' for help on a specific command.
+
+Available commands:
+  conductor-list-collector: Get the list of available collector plugins. 
+  conductor-push-collector: Add a collector plugin to conductor to collect information. 
+  conductor-start     : Start a conductor to collect the information 
+  conductor-stop      : Stop a conductor by ID or at salsa-engine 
+  instance-deploy     : Deploy one or more instances of a service unit. 
+  instance-info-collect: Ask collector to start gathering the information. The process may take time. 
+  instance-query      : Get the information of an instance by ID. 
+  instance-remove     : Remove an running instance. 
+  meta                : Get metadata of the SALSA which is connected. 
+  service-list        : List the current managed cloud services 
+  service-remove      : Undeploy all components and remove the cloud services. 
+  service-status      : Get all the list of instances 
+  service-submit      : Submit a TOSCA to start a deployment. 
+  subscribe-queue     : Subscribe queue to get SALSA actions 
+  syn                 : Send message the synchronize pioneers.
+</pre></code>
+Beside the commands that manage the system, some commands are for populating the adaptor and configuring with external services to collecting external capabilities. Conductor manages adaptors and communicates with salsa-engine. The salsa-client can send the request to salsa-engine or salsa-pioneer to start/stop a collector.
+
+
+
+
+<h1><a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Examples</h1>
+
+<p>We provide in the repository <a href="https://github.com/tuwiendsg/SALSA/tree/master/examples/ELISE" target="_blank">the examples of the service description and result of queries</a>. The service description can be found in <a href="http://tuwiendsg.github.io/iCOMOT/demo.html#javaDevPerspective" target="_blank">Java domain-specific language</a> or <a href="http://docs.oasis-open.org/tosca/TOSCA/v1.0/os/TOSCA-v1.0-os.html" target="_blank">TOSCA file</a> in XML format</p>
+
+<h3>ELISE supports Java programming</h3>
+ELISE provide a set of API to enable Java developer to query information, examine the service instances and call capabilities accordingly. Some examples are on <a href="https://github.com/tuwiendsg/SALSA/tree/master/elise-pom/elise-master/src/test/java/at/ac/tuwien/dsg/cloud/elise/master/examples">github</a>. A simple flow is shown below.
+<pre><code>
+    String endpoint = "http://[IP:port/path, where elise-master is deployed]/rest/elise/";
+
+    // the 1st proxy to manage the queries
+    EliseCommunicationInterface manageProxy = JAXRSClientFactory.create(endpoint, EliseCommunicationInterface.class);
+    EliseQuery query = new EliseQuery(ServiceCategory.Gateway)
+            .hasRule("location", "building1", EliseQueryRule.OPERATION.EQUAL);
+    String queryID = manageProxy.querySetOfInstances(query);
+    manageProxy.getQueryProcessStatus(queryID); // block
+
+    // the 2nd proxy to manage the information
+    UnitInstanceInfoManagement localProxy = JAXRSClientFactory.create(endpoint, UnitInstanceInfoManagement.class, Collections.singletonList(new JacksonJsonProvider()));
+    Set<UnitInstance> instances = localProxy.queryUnitInstance(query);
+    for (UnitInstance instance : instances) {
+        Capability c = instance.getCapabilityByName("changeRate");
+        if (c != null) {
+            CapabilityManagement.execute(c, new String[]{"5"});
+        }
+     }
+</pre></code>
+
+
+<h1><a name="contact" class="anchor" href="#contact"><span class="octicon octicon-link"></span></a>Contact</h1>
+
+<p>Please contact Le Duc Hung <a href="mailto:d.le@dsg.tuwien.ac.at">d.le [at] dsg.tuwien.ac.at</a> and/or Hong-Linh Truong <a href="mailto:truong@dsg.tuwien.ac.at">truong [at] dsg.tuwien.ac.at</a> for any kind of issue.</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
