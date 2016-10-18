@@ -26,3 +26,5 @@ config_TOSCA/
 *.pem
 /information-management/ClientJavaGUI/nbproject/private/
 /information-management/JavaFXApplication2/nbproject/private/
+*.timestamp
+standalone/
